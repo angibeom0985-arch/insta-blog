@@ -154,13 +154,6 @@ const BlogPostDetailPage: React.FC = () => {
           <div className="border-b border-gray-100 dark:border-zinc-900 pb-3" />
         </div>
 
-        {/* 썸네일 */}
-        {post.thumbnail && (
-          <div className="rounded-xl overflow-hidden aspect-video border border-gray-200 dark:border-zinc-800">
-            <img src={post.thumbnail} alt={post.title} className="w-full h-full object-cover" />
-          </div>
-        )}
-
         {/* 600px 너비 맞춤 본문 렌더러 (중간에 애드센스 삽입) */}
         <div 
           className="text-gray-800 dark:text-gray-200 blog-content-prose"
@@ -170,6 +163,13 @@ const BlogPostDetailPage: React.FC = () => {
           }}
           dangerouslySetInnerHTML={{ __html: getAdInjectedContent(post.content) }}
         />
+
+        {/* 본문 하단 썸네일 노출 (본문 HTML에 이미지가 포함되지 않은 경우에만 렌더링) */}
+        {post.thumbnail && !post.content.includes(post.thumbnail) && (
+          <div className="rounded-xl overflow-hidden aspect-video border border-gray-200 dark:border-zinc-800 mt-6">
+            <img src={post.thumbnail} alt={post.title} className="w-full h-full object-cover" />
+          </div>
+        )}
 
         {/* 저장 / 팔로우 유도 배너 */}
         <div className="p-6 rounded-2xl bg-slate-900 dark:bg-zinc-950 border border-blue-500/20 text-white space-y-4 shadow-md text-center">
